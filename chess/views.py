@@ -97,6 +97,3 @@ def fetch_month_games(request):
 
 def index(request):
     return render(request, 'chess/index.html')
-
-def monthly_games(request):
-    return render(request, 'chess/monthly_games.html')
