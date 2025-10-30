@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BlunderStruck</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'chess/styles.css' %}" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    </head>
+    <body class="new-full-body">
+
+        <nav>
+            <div>
+              <ul class="navbar">
+                    <li class="nav-item-new">
+                     <a class="nav-link-new" href="{% url 'index' %}">Home</a>
+                    </li>
+
+                    <li class="nav-item-new">
+                     <a class="nav-link-new" href="{% url 'monthly_games' %}">Games</a>
+                    </li>
+              </ul>
+            </div>
+          </nav>
+
+        <div class="new-body">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+
+
+ {% block script %}
+      <script type="module" src="{% static 'chess/main.js' %}"></script>
+    {% endblock %}
+
+
+
+
+
+
+    </body>
+
+
+
+</html>

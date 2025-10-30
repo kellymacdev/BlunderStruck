@@ -1,0 +1,54 @@
+{% extends 'chess/layout.html' %}
+{% load static %}
+
+
+{% block body %}
+<h1>BlunderStruck</h1>
+
+<div id="controls" class="mb-4">
+  <label for="yearSelect">Year:</label>
+  <select id="yearSelect"></select>
+
+  <label for="monthSelect">Month:</label>
+  <select id="monthSelect"></select>
+    <br>
+  <button id="loadButton">Load</button>
+</div>
+
+<div id="loading" style="display:none; text-align:center; margin-top:2rem;">
+  <p>Loading data… ⏳</p>
+</div>
+
+    <div id="stats" style="display:none;">
+  <p id="games-played"></p>
+  <p id="wins-losses"></p>
+  <p id="win-rate"></p>
+  <p id="elo-change"></p>
+</div>
+
+
+    <div id="graphs-container" class="graph-container" style="display:none;">
+<div class="rating-chart-container">
+<canvas id="ratingChart"></canvas>
+</div>
+
+
+<div class="openings-chart-container">
+<canvas id="openingsChart"></canvas>
+</div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+

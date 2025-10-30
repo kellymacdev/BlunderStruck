@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blunder-Struck</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'chess/graphs.js' %}" defer></script>
+    <script src="{% static 'chess/barchart.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'chess/styles.css' %}">
+</head>
+
+<body>
+<h1>Kris' Chess</h1>
+
+<p>Kris played {{ num_games }} games in {{ month_name }}.</p>
+<p>He won {{ wins }} games (of which {{ opp_resigned }} were resignations and {{ opp_checkmated }} were checkmates), drawn {{ draws }} games and lost {{ losses }} games (of which {{ resigned }} were resignations and {{ checkmated }} were checkmates)</p>
+<p>That's a win rate of {{ win_rate }}%.</p>
+<p>His ELO change over the month was: {{ elo_change }}</p>
+
+<div class="full-container">
+<div class="rating-chart-container">
+<canvas id="ratingChart"></canvas>
+</div>
+
+
+<div class="openings-chart-container">
+<canvas id="openingsChart"></canvas>
+</div>
+</div>
+
+
+<script>
+window.chartData = JSON.parse('{{ chart_data|escapejs }}');
+</script>
+<script>
+window.openingData = JSON.parse('{{ openings|escapejs }}');
+</script>
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blunder-Struck</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'chess/graphs.js' %}" defer></script>
+    <script src="{% static 'chess/barchart.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'chess/styles.css' %}">
+</head>
+
+<body>
+<h1>BlunderStruck</h1>
+
+<p>Kris' most recent loss was on {{ most_recent_loss.date }} and he
+    {% if most_recent_loss.kris_result == "checkmated" %}
+        got checkmated.
+        {% elif most_recent_loss.kris_result == "resigned" %}
+        resigned.
+        {% else %}
+        disconnected?.
+    {% endif %}
+</p>
+
+
+<script>
+window.chartData = JSON.parse('{{ chart_data|escapejs }}');
+</script>
+<script>
+window.openingData = JSON.parse('{{ openings|escapejs }}');
+</script>
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>
