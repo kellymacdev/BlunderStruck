@@ -95,5 +95,7 @@ def fetch_month_games(request):
     return JsonResponse({"games": games_data})
 
 
-def index(request):
-    return render(request, 'chess/index.html')
+def index(request, username):
+    return render(request, 'chess/index.html', {
+        'username': username
+    })

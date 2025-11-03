@@ -1,6 +1,6 @@
 
 // function to pull data through Django api proxy for specific month
-export async function fetchRecentMonths(username = 'kris_lemon', month, year) {
+export async function fetchRecentMonths(username, month, year) {
   try {
         const res = await fetch(`/api/month/?username=${username}&month=${month}&year=${year}`);
         console.log("Fetch status:", res.status);
@@ -20,14 +20,22 @@ export async function fetchRecentMonths(username = 'kris_lemon', month, year) {
 
 // normalise game data format
 export function normaliseGame(raw, username) {
-  const isKrisWhite = raw.white.username === username;
+  const isKrisWhite = raw.white.username.toLowerCase() === username;
   const krisSide = isKrisWhite ? raw.white : raw.black;
   const oppSide = isKrisWhite ? raw.black : raw.white;
   const date = new Date(raw.end_time * 1000); // epoch to JS Date
-  const openingUrl = raw.eco;
-  const openingSlug = isKrisWhite ? openingUrl.split('/').pop() : '';
-  const openingName = openingSlug.replace(/-/g, ' ').replace(/\d+\./g, '').trim();
-
+  let openingName = '';
+  if (raw.eco) {
+    const openingUrl = raw.eco;
+    const openingSlug = isKrisWhite ? openingUrl.split('/').pop() : '';
+    const name_temp = openingSlug.replace(/-/g, ' ').replace(/\d+\./g, '').trim();
+    const words = name_temp.split(' ');
+    if (words.length > 4 ) {
+      openingName = words.slice(0, 4).join(' ') + '...';
+    } else {
+      openingName = name_temp;
+    }
+  }
   return {
     chesscom_id: raw.url?.split('/').pop() || null,
     date,
@@ -39,7 +47,7 @@ export function normaliseGame(raw, username) {
     opp_rating: oppSide.rating,
     kris_result: krisSide.result,
     opp_result: oppSide.result,
-    opening: openingName || '',
+    opening: openingName,
     pgn: raw.pgn || null,
   };
 }
@@ -145,8 +153,14 @@ function getOpeningCounts(games) {
     }
   });
   // remove openings played < 2 times
+  let count_lim = 0;
+  if (games.length > 100) {
+    count_lim = 5;
+  } else {
+    count_lim = 2;
+  }
   for (const key in counts) {
-    if (counts[key] < 2) delete counts[key];
+    if (counts[key] < count_lim) delete counts[key];
   }
   return counts;
 }
