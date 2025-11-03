@@ -12,10 +12,8 @@ async function loadUser(USERNAME) {
 
     statsContainer.style.display = "none";
     graphs.style.display = "none";
-    document.getElementById('games-played').textContent = "";
-    document.getElementById('wins-losses').textContent = "";
-    document.getElementById('win-rate').textContent = "";
-    document.getElementById('elo-change').textContent = "";
+    document.getElementById('stats').innerHTML = '';
+
 
 
     const controlsContainer = document.getElementById("controls");
@@ -103,10 +101,7 @@ async function loadUser(USERNAME) {
 
             if (!games || games.length === 0) {
                 graphs.style.display = 'none';
-                document.getElementById('games-played').textContent = ":(";
-                document.getElementById('wins-losses').textContent = "Sorry";
-                document.getElementById('win-rate').textContent = "no games found for this month";
-                document.getElementById('elo-change').textContent = ":(";
+                document.getElementById('stats').innerHTML = `<p>Sorry, no games found for this month. Please select a different month.</p>`;
                 console.log("no games found for this month")
             } else {
                 graphs.style.display = 'flex';

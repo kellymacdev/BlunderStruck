@@ -83,12 +83,9 @@ export function renderStats(stats, month_name, username) {
   ].filter(Boolean).join(', ')
 
 
-  document.getElementById('games-played').textContent =
-    `${username} played ${stats.num_games} games in ${month_name}.`;
-  document.getElementById('wins-losses').textContent =
-    `They won ${stats.wins} games (${oppDetails}) ${drawDetails} and lost ${stats.losses} games (${lossDetails}).`;
-  document.getElementById('win-rate').textContent =
-    `That's a win rate of ${stats.win_rate}%.`;
-  document.getElementById('elo-change').textContent =
-    `Their ELO change over the month was: ${stats.elo_change}`;
+  document.getElementById("stats").innerHTML = `
+    <p id="games-played">${username} played ${stats.num_games} games in ${month_name}.</p>
+  <p id="wins-losses">They won ${stats.wins} games (${oppDetails}) ${drawDetails} and lost ${stats.losses} games (${lossDetails}).</p>
+  <p id="win-rate">That's a win rate of ${stats.win_rate}%.</p>
+  <p id="elo-change">Their ELO change over the month was: ${stats.elo_change}</p>`;
 }
