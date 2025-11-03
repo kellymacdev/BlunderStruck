@@ -6,8 +6,8 @@ function showLoading(isLoading) {
   const graphs = document.getElementById('graphs-container');
   if (load) {
     load.style.display = isLoading ? 'flex' : 'none';
-    stat.style.display = isLoading ? 'none' : 'flex';
     graphs.style.display = isLoading ? 'none' : 'flex';
+    stat.style.display = isLoading ? 'none' : 'flex';
   }
 }
 
@@ -96,7 +96,7 @@ function renderStats(stats, month_name, username) {
 }
 
 
-async function loadMonthData(year, month, username) {
+export async function loadMonthData(year, month, username) {
   showLoading(true);
   try {
     const raw_plain = await fetchRecentMonths(username, month, year);
@@ -138,7 +138,21 @@ async function loadMonthData(year, month, username) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOMContentLoaded fired ✅");
+
+  let USERNAME = null;
+  document.getElementById('search-button').addEventListener('click', async () => {
+  const input = document.getElementById('usernameInput').value.trim();
+  if (!input) {
+     alert('Please enter a username!');
+     return;
+  }
+  USERNAME = input;
   console.log("We want for:", USERNAME);
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+  await loadMonthData(currentYear, currentMonth, USERNAME);
+});
+
   const yearSelect = document.getElementById("yearSelect");
   const monthSelect = document.getElementById("monthSelect");
   const loadButton = document.getElementById("loadButton");

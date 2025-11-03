@@ -1,16 +1,45 @@
+export async function CheckUser(username, month, year) {
+  try {
+        const res = await fetch(`/api/month/?username=${username}&month=${month}&year=${year}`);
+        console.log("Fetch status:", res.status);
+
+        if (res.status === 404) {
+          return {error: "user doesn't exist"}
+        }
+
+        if (res.status === 200) {
+          return {message: "found user"}
+        }
+    } catch (err) {
+        console.error("Error in fetchRecentMonths:", err);
+        return [];
+    }
+}
+
 
 // function to pull data through Django api proxy for specific month
 export async function fetchRecentMonths(username, month, year) {
   try {
         const res = await fetch(`/api/month/?username=${username}&month=${month}&year=${year}`);
         console.log("Fetch status:", res.status);
+
+
+        // If the response isn’t OK, bail with empty array
+        if (!res.ok) {
+          console.warn("Non-OK response from server");
+          return [];
+        }
+
         const json = await res.json();
 
-        // Flatten safely
-        if (!json.games) return "not games";
+        if (!json || !Array.isArray(json.games)) {
+          console.warn("No valid games array found in response:", json);
+          return [];
+        }
+
         // If nested arrays, flatten
         const allGames = json.games.flatMap(g => Array.isArray(g) ? g : [g]);
-        console.log("Flattened games:", allGames);
+        console.log("Flattened games:", allGames.length);
         return allGames;
     } catch (err) {
         console.error("Error in fetchRecentMonths:", err);

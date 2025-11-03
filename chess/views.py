@@ -59,6 +59,11 @@ def fetch_month_games(request):
     # Fetch archives
     archives_url = f"https://api.chess.com/pub/player/{username}/games/archives"
     response = requests.get(archives_url, headers=headers)
+    if response.status_code == 404:
+        return JsonResponse(
+            {"error": "User not found"},
+            status=404
+        )
     if response.status_code != 200:
         print(f"Failed to fetch archives: {response.status_code}")
         archives = []
@@ -95,7 +100,5 @@ def fetch_month_games(request):
     return JsonResponse({"games": games_data})
 
 
-def index(request, username):
-    return render(request, 'chess/index.html', {
-        'username': username
-    })
+def index(request):
+    return render(request, 'chess/index.html')
