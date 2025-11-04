@@ -76,7 +76,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'BlunderStruck.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
-    "https://https://kellymacdev.github.io/Blunderstruck-frontend/",
+    "https://https://kellymacdev.github.io",
 ]
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
