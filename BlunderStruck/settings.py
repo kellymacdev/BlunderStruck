@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'chess',
+    'corsheaders'
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,7 +75,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'BlunderStruck.wsgi.application'
 
-
+CORS_ALLOWED_ORIGINS = [
+    "https://https://kellymacdev.github.io/Blunderstruck-frontend/",
+]
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
